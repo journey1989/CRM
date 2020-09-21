@@ -15,7 +15,7 @@ class Crm_TmkLeadsInfo(unittest.TestCase):
         # data = {
         #     'boardType': BOARDTYPE3
         # }
-        res = Myrequest.get(self.url,  headers )
+        res = Myrequest.get(self.url,  header=headers )
         self.assertEqual(0, res.get('code'))
 
     def tearDown(self):

@@ -22,6 +22,8 @@ BOARDTYPE1 = 3
 BOARDTYPE2 = 4
 #TMK面板
 BOARDTYPE3 = 1
+#cc面板
+BOARDTYPE4 = 2
 LEVEL = 'debug'
 LOG_PATH = os.path.join(BASE_PATH, 'log')
 LOG_NAME = 'crm.log'

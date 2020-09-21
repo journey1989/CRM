@@ -27,13 +27,11 @@ def login():
 
     res = Myrequest.post(url=real_url, data=json_data, header=headers, is_json=False)
     #json.dumps()用于将字典形式的数据转化为字符串，json.loads()用于将字符串形式的数据转化为字典
-    #print(res.text)
-    #r = json.loads(res.text)
-    print(res['data']['token'])
+
     token = res['data']['token']
-    print(res['data']['username'])
+
     username = res['data']['username']
-    print(res['data']['roleInfos'])
+
     roleInfos = res['data']['roleInfos']
 
 

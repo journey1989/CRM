@@ -50,7 +50,7 @@ class Myrequest():
 
         try:
 
-            res = req.get(url, params=data, cookies=cookie, headers=header, verify=False, timeout=20).json()
+            res = req.get(url, params=data, cookies=cookie, headers=header, verify=False, timeout=30).json()
 
 
 
