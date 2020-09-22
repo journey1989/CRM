@@ -19,7 +19,7 @@ def SendEmail():
        exec = {'error':str(e)}
 
     else:
-        yag.send(to='lilei2@putao-inc.com',contents=body,subject='CRM接口自动化测试报告')
+        yag.send(to='lilei2@putao-inc.com',contents=body, subject='CRM接口自动化测试报告')
         print('邮件已发送')
         yagmail.SMTP.close(yag)
 

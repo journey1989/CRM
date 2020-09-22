@@ -1,0 +1,1293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CRM接口自动化</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+    
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+
+    a.popup_link:hover {
+        color: red;
+    }
+
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+
+
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+    
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+
+
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+
+
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+
+
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>CRM接口自动化</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2020-09-21 19:01:10</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:30.654588</p>
+<p class='attribute'><strong>状态:</strong> 通过 71 失败 1</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'>CRM接口自动化测试结果如下：</p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='passClass'>
+        <td>CRM_Add.Crm_add</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
+    </tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_add: 我的全部用户：新建客户</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCfifteenDayData.Crm_FifteenDayData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c2',1)">详情</a></td>
+    </tr>
+
+<tr id='pt2.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_FifteenDayData: cc面板：15天内待跟进</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCfinishInfo.Crm_FinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c3',1)">详情</a></td>
+    </tr>
+
+<tr id='pt3.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_FinishInfo: cc面板：本月完课数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCleadsInfo.Crm_LeadsInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c4',1)">详情</a></td>
+    </tr>
+
+<tr id='pt4.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_LeadsInfo: cc面板：今日分配leads</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCmsgRemindList.Crm_MsgRemindList</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c5',1)">详情</a></td>
+    </tr>
+
+<tr id='pt5.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MsgRemindList: cc面板：消息提醒</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCordersAmount.Crm_OrdersAmount</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c6',1)">详情</a></td>
+    </tr>
+
+<tr id='pt6.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_OrdersAmount: cc面板：消息提醒</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCordersInfo.Crm_orderinfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c7',1)">详情</a></td>
+    </tr>
+
+<tr id='pt7.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_orderinfo: cc面板：本月成单总数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCreport.Crm_report</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c8',1)">详情</a></td>
+    </tr>
+
+<tr id='pt8.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_report: cc面板：指标统计</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='failClass'>
+        <td>CRM_CCsaleAmountRanking.Crm_saleAmountRanking</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c9',1)">详情</a></td>
+    </tr>
+
+<tr id='ft9.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_saleAmountRanking: cc面板：销售排行榜</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft9.1')" >
+        失败</a>
+
+    <div id='div_ft9.1' class="popup_window">
+        <pre>ft9.1: hello==== eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxNSIsImV4cCI6MTYwMDcxNDg3MCwiZW1haWwiOiJ6aGFuZ2p1bmZlbmdAcHV0YW8taW5jLmNvbSJ9.Btz-IXNtt5Wgx4C7ghK2GNbeT8qoPNjSJ_bh39Hr1Vg
+Traceback (most recent call last):
+  File "D:\autotest\test_case\CRM_CCsaleAmountRanking.py", line 25, in test_saleAmountRanking
+    self.assertEqual(0, res.get('code'))
+AssertionError: 0 != 80000
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCsevenDayData.Crm_SevenDayData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c10',1)">详情</a></td>
+    </tr>
+
+<tr id='pt10.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SevenDayData: cc面板：7天内待跟进</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCthreeDayData.Crm_ThreeDayData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c11',1)">详情</a></td>
+    </tr>
+
+<tr id='pt11.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ThreeDayData: cc面板：3天内待跟进</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCtodayActive.Crm_TodayActive</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c12',1)">详情</a></td>
+    </tr>
+
+<tr id='pt12.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TodayActive: cc面板：今日用户主动行为</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCtodayTrialInfo.Crm_TodayTrialInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c13',1)">详情</a></td>
+    </tr>
+
+<tr id='pt13.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TodayTrialInfo: cc面板：今日预约行为</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CCtrialInfo.Crm_orderinfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c14',1)">详情</a></td>
+    </tr>
+
+<tr id='pt14.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_orderinfo: cc面板：本月约课数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ChannelClassify.Crm_ChannelClassify</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c15',1)">详情</a></td>
+    </tr>
+
+<tr id='pt15.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_channelclassify: 我的全部用户：获取渠道</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt15.1')" >
+        通过</a>
+
+    <div id='div_pt15.1' class="popup_window">
+        <pre>pt15.1: ['品牌流量', '运营活动', '异业合作', '市场活动', '渠道投放', '应用市场', 'SEO', '盲打', '转介绍', 'B端合作', '其他', '社交电商', '地推电销', '学校渠道', '妈妈代理人', '地推社群', '应用商店', '搜索推广', '线下']
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_CrmUserTag.Crm_CrmUserTag</td>
+        <td>6</td>
+        <td>6</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c16',6)">详情</a></td>
+    </tr>
+
+<tr id='pt16.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag1: 我的全部用户查询条件：1所有查询条件</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.1')" >
+        通过</a>
+
+    <div id='div_pt16.1' class="popup_window">
+        <pre>pt16.1: [{'name': '不限', 'keyWord': '-1'}, {'name': '未加好友', 'keyWord': 'notFriends'}, {'name': '未出席', 'keyWord': 'notCourse'}, {'name': '体验课未预约', 'keyWord': 'trialNotAppointment'}, {'name': '体验课未完课', 'keyWord': 'trialNotFinish'}, {'name': '体验课已完课', 'keyWord': 'trialFinish'}, {'name': '已流失', 'keyWord': 'alreadyLose'}, {'name': '已成单', 'keyWord': 'alreadyPay'}, {'name': '已续费', 'keyWord': 'alreadyRenew'}, {'name': '出席已完课', 'keyWord': 'courseAlreadyFinish'}, {'name': '出席未完课', 'keyWord': 'courseNotFinish'}, {'name': '未购买', 'keyWord': 'notPay'}, {'name': '已出席', 'keyWord': 'alreadyCourse'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt16.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag2: 我的全部用户查询条件：2用户状态</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.2')" >
+        通过</a>
+
+    <div id='div_pt16.2' class="popup_window">
+        <pre>pt16.2: [{'name': '不限', 'keyWord': '-1'}, {'name': '未加好友', 'keyWord': 'longNotFriends'}, {'name': '待跟进', 'keyWord': 'waitFollow'}, {'name': '待回访', 'keyWord': 'waitVisit'}, {'name': '7天内未开课', 'keyWord': 'sevenCourse'}, {'name': '未出席', 'keyWord': 'notCourse'}, {'name': '待纠音', 'keyWord': 'courseAlreadyFinish'}, {'name': '待续费', 'keyWord': 'waitRenew'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt16.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag3: 我的全部用户查询条件：3跟进状态</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.3')" >
+        通过</a>
+
+    <div id='div_pt16.3' class="popup_window">
+        <pre>pt16.3: [{'name': '不限', 'keyWord': '-1'}, {'name': '未外呼', 'keyWord': 'notCall'}, {'name': '未接通', 'keyWord': 'notConnect'}, {'name': '待跟进', 'keyWord': 'waitFollow'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt16.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag4: 我的全部用户查询条件：4用户级别</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.4')" >
+        通过</a>
+
+    <div id='div_pt16.4' class="popup_window">
+        <pre>pt16.4: [{'name': '不限', 'keyWord': '-1'}, {'name': 'A级客户', 'keyWord': 'A'}, {'name': 'B级客户', 'keyWord': 'B'}, {'name': 'C级客户', 'keyWord': 'C'}, {'name': 'D级客户', 'keyWord': 'D'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt16.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag5: 我的全部用户查询条件：5上课情况</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.5')" >
+        通过</a>
+
+    <div id='div_pt16.5' class="popup_window">
+        <pre>pt16.5: [{'name': '不限', 'keyWord': '-1'}, {'name': '本周去重完课', 'keyWord': 'thisWeekStudyNumNoduplicate'}, {'name': '上周去重完课', 'keyWord': 'weekStudyNumNoduplicate'}, {'name': '上月去重完课', 'keyWord': 'monthStudyNumNoduplicate'}, {'name': '累计去重完课', 'keyWord': 'studyNumNoduplicate'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt16.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_crmusertag6: 我的全部用户查询条件：6上课情况下级查询条件</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.6')" >
+        通过</a>
+
+    <div id='div_pt16.6' class="popup_window">
+        <pre>pt16.6: [{'name': '大于等于', 'keyWord': 'greaterThan'}, {'name': '小于等于', 'keyWord': 'lessThan'}, {'name': '等于', 'keyWord': 'equal'}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ExperienceBoard.Crm_ExperienceBoard</td>
+        <td>5</td>
+        <td>5</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c17',5)">详情</a></td>
+    </tr>
+
+<tr id='pt17.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceBoard_1_1: 体验营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt17.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceBoard_2_2: 体验营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt17.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceBoard_3_3: 体验营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt17.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceBoard_4_4: 体验营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt17.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceBoard_5_5: 体验营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ExperienceOutUsers.Crm_ExperienceOutUsers</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c18',1)">详情</a></td>
+    </tr>
+
+<tr id='pt18.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceOutUsers: 体验营面板：营期外学员</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ExperienceSumData.Crm_ExperienceSumData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c19',1)">详情</a></td>
+    </tr>
+
+<tr id='pt19.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperienceSumData: 体验营面板：全部营期数据汇总</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ExperiodsFinishInfo.Crm_ExperiodsFinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c20',1)">详情</a></td>
+    </tr>
+
+<tr id='pt20.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperiodsFinishInfo: 体验营面板：本月完课数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ExperiodsOrdersAmount.Crm_ExperiodsFinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c21',1)">详情</a></td>
+    </tr>
+
+<tr id='pt21.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_ExperiodsFinishInfo: 体验营面板：本月成单总金额</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_Menu.Crm_menu</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c22',1)">详情</a></td>
+    </tr>
+
+<tr id='pt22.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_menu: 获取菜单</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt22.1')" >
+        通过</a>
+
+    <div id='div_pt22.1' class="popup_window">
+        <pre>pt22.1: headers====== {'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxNSIsImV4cCI6MTYwMDcxNDg3NiwiZW1haWwiOiJ6aGFuZ2p1bmZlbmdAcHV0YW8taW5jLmNvbSJ9.HrC5h3Lc5-ccPHT__CQOS2Pwx3GgVKR61tFlzbbOiSg'}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MonthAssignCount.Crm_MonthAssignCount</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c23',1)">详情</a></td>
+    </tr>
+
+<tr id='pt23.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MonthAssignCount: 体验营面板：本月分配leads数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MonthMargin.Crm_MonthMargin</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c24',1)">详情</a></td>
+    </tr>
+
+<tr id='pt24.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MonthMargin: 体验营面板：获取本月业绩差额</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MyPeriods_MyPeriodsSumData.CRM_MyPeriods_MyPeriodsSumData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c25',1)">详情</a></td>
+    </tr>
+
+<tr id='pt25.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriods_MyPeriodsSumData: 我的营期-体验营：营期数据汇总</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MyPeriods_notOpenningSummary.CRM_MyPeriods_notOpenningSummary</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c26',1)">详情</a></td>
+    </tr>
+
+<tr id='pt26.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriods_notOpenningSummary: 我的营期-体验营：未开营</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MyPeriods_openningSummary.CRM_MyPeriods_openningSummary</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c27',1)">详情</a></td>
+    </tr>
+
+<tr id='pt27.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriods_openningSummary: 我的营期-体验营：开营中</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MySelfPeriodsName.Crm_MySelfPeriodsName</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c28',1)">详情</a></td>
+    </tr>
+
+<tr id='pt28.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MySelfPeriodsName: 体验营面板：获取我的营期</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MySpecial_MyPeriodsSumData.CRM_MyPeriodsMySpecial_MyPeriodsSumData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c29',1)">详情</a></td>
+    </tr>
+
+<tr id='pt29.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriodsMySpecial_MyPeriodsSumData: 我的营期-特训营：营期数据汇总</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MySpecial_notOpenningSummary.CRM_MyPeriodsMySpeical_notOpenningSummary</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c30',1)">详情</a></td>
+    </tr>
+
+<tr id='pt30.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriodsMySpeical_notOpenningSummary: 我的营期-特训营：未开营</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MySpecial_openningSummary.CRM_MyPeriodsMySpecial_openningSummary</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c31',1)">详情</a></td>
+    </tr>
+
+<tr id='pt31.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_MyPeriodsMySpecial_openningSummary: 我的营期-特训营：开营中</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_MyUserList.Crm_MyUserList</td>
+        <td>7</td>
+        <td>7</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c32',7)">详情</a></td>
+    </tr>
+
+<tr id='pt32.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist1: 我的全部用户：全部</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist2: 我的全部用户：已成单</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist3: 我的全部用户：未成单</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist4: 我的全部用户：我的锁定用户</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist5: 我的全部用户：公海</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist6: 我的全部用户：勿扰库</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt32.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_myuserlist7: 我的全部用户：学员列表</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_PhonePlace.Crm_PhonePlace</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c33',1)">详情</a></td>
+    </tr>
+
+<tr id='pt33.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_phoneplace: 我的全部用户：归属地查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt33.1')" >
+        通过</a>
+
+    <div id='div_pt33.1' class="popup_window">
+        <pre>pt33.1: ['山西太原', '广东深圳', '广西防城港', '陕西西安', '新疆乌鲁木齐', '北京', '内蒙古鄂尔多斯', '贵州贵阳', '江苏徐州', '四川攀枝花', '安徽合肥', '河南商丘', '江苏南京', '广东佛山', '山东烟台', '河北保定', '广西柳州', '浙江杭州', '黑龙江哈尔滨', '吉林吉林', '上海', '江西南昌', '江苏南通', '辽宁阜新', '辽宁大连', '河北廊坊', '山东威海', '山东东营', '湖南长沙', '河北唐山', '河北承德', '河北沧州', '河北石家庄', '广东清远', '江苏常州', '湖北武汉', '四川成都', '山西朔州', '湖北恩施', '浙江温州', '河北邢台', '浙江湖州', '黑龙江牡丹江', '山东青岛', '贵州遵义', '广东惠州', '广东广州', '广东东莞', '江苏苏州', '湖北黄石', '天津', '河南郑州', '广东江门', '内蒙古乌兰察布', '山西长治', '山东济南', '福建泉州', '青海西宁', '安徽阜阳', '河北邯郸', '新疆库尔勒', '贵州铜仁', '辽宁丹东', '江西景德镇', '河南开封', '陕西延安', '江苏泰州', '湖南岳阳', '宁夏吴忠', '黑龙江鸡西', '福建厦门', '广东中山', '重庆', '河北秦皇岛', '吉林长春', '山东济宁', '山东临沂', '辽宁沈阳', '陕西宝鸡', '陕西咸阳', '广西南宁', '河南南阳', '湖南郴州', '河南鹤壁', '安徽亳州', '甘肃天水', '湖南衡阳', '湖南怀化', '云南大理', '河南安阳', '安徽蚌埠', '山西运城', '浙江丽水', '新疆伊犁', '广西桂林', '河南信阳', '江西萍乡', '湖北襄阳', '河南濮阳', '河南洛阳', '浙江台州', '甘肃兰州', '江西九江', '陕西榆林', '浙江宁波', '山东滨州', '河南驻马店', '福建福州', '广东云浮', '山东莱芜', '湖北荆州', '山东德州', '山西忻州', '吉林延吉', '山东淄博', '吉林白城', '广东珠海', '吉林松原', '甘肃陇南', '河北张家口', '云南昆明', '黑龙江伊春', '河北衡水', '黑龙江黑河', '河南许昌', '江苏无锡', '山西晋中', '辽宁葫芦岛', '湖南吉首', '浙江金华', '安徽宿州', '山东潍坊', '内蒙古呼和浩特', '黑龙江大兴安岭', '山西大同', '宁夏银川', '内蒙古通辽', '贵州凯里', '江苏盐城', '四川德阳', '江苏连云港', '湖南永州', '陕西商洛', '福建宁德', '广东茂名', '宁夏石嘴山', '山西吕梁', '江西吉安', '湖南株洲', '广东梅州', '湖北宜昌', '湖南娄底', '湖北随州', '湖北孝感', '河南漯河', '安徽芜湖', '吉林四平', '浙江衢州', '黑龙江绥化', '浙江嘉兴', '江西上饶', '广东揭阳', '广西梧州', '山东泰安', '黑龙江齐齐哈尔', '江苏镇江', '陕西安康', '湖南邵阳', '四川凉山', '河南三门峡', '安徽淮北', '云南玉溪', '湖北荆门', '河南新乡', '湖南益阳', '广东湛江', '福建莆田', '内蒙古包头', '安徽池州', '广东汕头', '江西赣州', '四川泸州', '安徽马鞍山', '四川乐山', '广西钦州', '四川内江', '陕西渭南', '山西阳泉', '安徽淮南', '广东河源', '内蒙古巴彦淖尔', '江苏淮安', '河南焦作', '山东聊城', '辽宁朝阳', '黑龙江双鸭山', '江西鹰潭', '新疆吐鲁番', '海南海口', '广东肇庆', '内蒙古赤峰', '四川达州', '新疆喀什', '福建漳州', '辽宁鞍山', '福建南平', '四川宜宾', '江苏宿迁', '黑龙江大庆', '河南平顶山', '四川巴中', '广东阳江', '江西抚州', '湖北黄冈', '浙江绍兴', '新疆和田', '青海海东', '辽宁锦州', '山东日照', '辽宁盘锦', '内蒙古锡林郭勒盟', '吉林辽源', '安徽滁州', '安徽宣城', '河南济源', '辽宁营口', '广东潮州', '新疆阿勒泰', '新疆石河子', '山西临汾', '四川遂宁', '广东韶关', '湖北江汉', '湖南湘潭', '河南周口', '吉林通化', '浙江舟山', '吉林白山', '甘肃金昌', '四川雅安', '云南楚雄', '山东菏泽', '湖南常德', '新疆奎屯', '江西宜春', '广西贵港', '安徽黄山', '吉林延边', '山东枣庄', '福建三明', '辽宁抚顺', '甘肃临夏', '广西玉林', '黑龙江鹤岗', '湖南张家界', '内蒙古锡林浩特', '四川广元', '山西晋城', '江苏扬州', '内蒙古兴安盟', '内蒙古乌兰浩特', '辽宁本溪', '四川广安', '云南德宏', '甘肃酒泉', '贵州黔东南', '广西北海', '云南曲靖', '内蒙古乌海', '甘肃定西', '宁夏固原', '贵州都匀', '新疆博乐', '辽宁铁岭', '湖北鄂州', '黑龙江佳木斯', '甘肃张掖', '安徽六安', '吉林梅河口', '四川绵阳', '四川自贡', '新疆昌吉', '贵州黔西南', '重庆万州', '云南昭通', '湖北十堰', '湖北咸宁', '广西崇左', '辽宁辽阳', '贵州兴义', '甘肃白银', '新疆阿克苏', '黑龙江七台河', '安徽安庆', '四川眉山', '新疆克拉玛依', '福建龙岩', '重庆涪陵', '安徽铜陵', '内蒙古海拉尔', '贵州黔南', '广东汕尾', '河南潢川', '内蒙古呼伦贝尔', '广西河池', '云南保山', '广西百色', '甘肃庆阳', '四川资阳', '云南红河', '陕西汉中', '贵州六盘水', '甘肃嘉峪关', '贵州安顺', '四川南充', '云南文山', '内蒙古阿拉善盟', '云南普洱', '甘肃平凉', '西藏拉萨', '广西来宾', '重庆黔江', '贵州毕节', '云南丽江', '江西新余', '西藏林芝', '青海格尔木', '宁夏中卫', '四川甘孜', '新疆巴音郭楞', '新疆塔城', '云南临沧', '四川阿坝', '西藏昌都', '新疆哈密', '广西贺州', '云南西双版纳', '甘肃甘南', '陕西铜川', '青海海北', '湖北仙桃', '吉林珲春', '云南迪庆', '云南思茅', '新疆克州', '青海黄南', '甘肃武威', '青海海西', '湖北潜江', '青海共和', '青海果洛', '西藏日喀则', '湖北神农架', '湖南湘西', '云南怒江', '青海玉树', '西藏阿里', '西藏那曲', '西藏山南', '青海海晏', '四川西昌']
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_ReceiveLeads.Crm_ReceiveLeads</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c34',1)">详情</a></td>
+    </tr>
+
+<tr id='pt34.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_receiveleads: 我的全部用户：领取客户</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SelectInfo.Crm_SelectInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c35',1)">详情</a></td>
+    </tr>
+
+<tr id='pt35.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_selectinfo: 我的全部用户：筛选条件</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt35.1')" >
+        通过</a>
+
+    <div id='div_pt35.1' class="popup_window">
+        <pre>pt35.1: [{'indicatorId': 2, 'parentId': '', 'keyWord': 'putaoId', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '葡萄ID', 'url': '', 'data': '', 'options': '{"min":0,"max":999999999}', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 3, 'parentId': '', 'keyWord': 'nickname', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '家长微信昵称', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 4, 'parentId': '', 'keyWord': 'phoneNum', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '手机号', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 5, 'parentId': '', 'keyWord': 'city', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '所在地', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 7, 'parentId': '', 'keyWord': 'parents', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '家长称呼', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 8, 'parentId': '', 'keyWord': 'createTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '注册时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 9, 'parentId': '', 'keyWord': 'saleAssignTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': 'leads分配时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 12, 'parentId': '', 'keyWord': 'parentsRemark', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '家长喜好备注', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 13, 'parentId': '', 'keyWord': 'kidName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '孩子姓名', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 14, 'parentId': '', 'keyWord': 'engName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '英文名', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 15, 'parentId': '', 'keyWord': 'age', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '年龄', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 16, 'parentId': '', 'keyWord': 'birth', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '出生日期', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 17, 'parentId': '', 'keyWord': 'gender', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '性别', 'url': '', 'data': '[{"text":"男","value":0},{"text":"女","value":1}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 18, 'parentId': '', 'keyWord': 'school', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '所在学校', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 19, 'parentId': '', 'keyWord': 'grade', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '所在年级', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 20, 'parentId': '', 'keyWord': 'className', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '所在班级', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 21, 'parentId': '', 'keyWord': 'kidLevel', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '水平测试情况', 'url': '', 'data': '[{"text":"Level K","value":0},{"text":"Level 1上","value":1},{"text":"Level 1下","value":2},{"text":"Level 2上","value":3},{"text":"Level 2下","value":4},{"text":"Level 3上","value":5},{"text":"Level 3下","value":105}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 22, 'parentId': '', 'keyWord': 'currentStage', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '当前所处阶段', 'url': '', 'data': '[{"text":"体验课","value":1},{"text":"体验营","value":2},{"text":"特训营","value":3},{"text":"长期班","value":4}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 23, 'parentId': '', 'keyWord': 'saleOwnerName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '当前归属', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 24, 'parentId': '', 'keyWord': 'firstStudyAll', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '首次上课时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 25, 'parentId': '', 'keyWord': 'lastStudyAll', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '最近上课时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 27, 'parentId': '', 'keyWord': 'studyNumNoduplicate', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '去重完课节数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 28, 'parentId': '', 'keyWord': 'remark', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '学员情况备注', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 29, 'parentId': '', 'keyWord': 'fromStr', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '注册设备', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 30, 'parentId': '', 'keyWord': 'loginTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '首次登陆app时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 31, 'parentId': '', 'keyWord': 'sourcePutaoId', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '推荐人', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 32, 'parentId': '', 'keyWord': 'introductionUser', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '引入leads个数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 33, 'parentId': '', 'keyWord': 'introductionGoodsCount', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '引入正价课单数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 34, 'parentId': '', 'keyWord': 'userTag', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '用户标签', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 35, 'parentId': '', 'keyWord': 'followType', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '跟进类型', 'url': '', 'data': '[{"text":"课后回访","value":1},{"text":"课前挖需","value":2},{"text":"约课","value":3},{"text":"约家长会","value":4},{"text":"定期回访","value":5},{"text":"课后关单","value":6},{"text":"老用户召回","value":7},{"text":"首单元回访","value":8},{"text":"月回访","value":9}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 36, 'parentId': '', 'keyWord': 'nextFollowTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '下次跟进时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 39, 'parentId': '', 'keyWord': 'trialLevel', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '体验课级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 40, 'parentId': '', 'keyWord': 'trialCourseName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '体验课预约课程名称', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 41, 'parentId': '', 'keyWord': 'trialTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '体验课预约上课时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 42, 'parentId': '', 'keyWord': 'ifSeller', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '体验课预约方', 'url': '', 'data': '[{"text":"自己约","value":0},{"text":"CC约","value":1}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 43, 'parentId': '', 'keyWord': 'saleName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': 'CC负责人', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 45, 'parentId': '', 'keyWord': 'experiencePeriods', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '体验营营期', 'url': '/periodsWorkBoard/getMyPeriodsName?type=3', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 46, 'parentId': '', 'keyWord': 'experiencePayTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '体验营付费时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 47, 'parentId': '', 'keyWord': 'experiencePeriodsValidate', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '体验营有效期', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 48, 'parentId': '', 'keyWord': 'experiencePayPrice', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '体验营付费金额', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 49, 'parentId': '', 'keyWord': 'experiencePackageName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '体验营套餐名称', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 50, 'parentId': '', 'keyWord': 'experienceChannel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '体验营渠道', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 52, 'parentId': '', 'keyWord': 'experienceBuyLevel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '购买体验营级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 53, 'parentId': '', 'keyWord': 'experienceCourseLevel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '课程体验营级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 54, 'parentId': '', 'keyWord': 'experienceTeacherName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '体验营带班老师', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 55, 'parentId': '', 'keyWord': 'experienceWxNumber', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '体验营分配微信号', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 56, 'parentId': '', 'keyWord': 'experienceIfFriend', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '是否已加体验营老师好友', 'url': '', 'data': '[{"text":"是","value":1},{"text":"否","value":0}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 57, 'parentId': '', 'keyWord': 'lessonOneTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 1出席次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 58, 'parentId': '', 'keyWord': 'finishOneTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 1完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 59, 'parentId': '', 'keyWord': 'lessonTwoTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 2出席次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 60, 'parentId': '', 'keyWord': 'finishTwoTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 2完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 61, 'parentId': '', 'keyWord': 'lessonThreeTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 3出席次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 62, 'parentId': '', 'keyWord': 'finishThreeTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 3完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 63, 'parentId': '', 'keyWord': 'goSchoolLevel', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '入校英语水平测试', 'url': '', 'data': '[{"text":"Level K","value":0},{"text":"Level 1上","value":1},{"text":"Level 1下","value":2},{"text":"Level 2上","value":3},{"text":"Level 2下","value":4},{"text":"Level 3上","value":5},{"text":"Level 3下","value":6}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 65, 'parentId': '', 'keyWord': 'specialPeriods', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '特训营营期', 'url': '/periodsWorkBoard/getMyPeriodsName?type=4', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 66, 'parentId': '', 'keyWord': 'specialPayTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '特训营付费时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 67, 'parentId': '', 'keyWord': 'specialPeriodsValidate', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '特训营有效期', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 68, 'parentId': '', 'keyWord': 'specialPayPrice', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '特训营付费金额', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 69, 'parentId': '', 'keyWord': 'specialPackageName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '特训营套餐名称', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 70, 'parentId': '', 'keyWord': 'specialChannel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '特训营渠道', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 72, 'parentId': '', 'keyWord': 'specialBuyLevel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '购买特训营级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 73, 'parentId': '', 'keyWord': 'specialCourseLevel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '课程特训营级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 74, 'parentId': '', 'keyWord': 'specialTeacherName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '特训营带班老师', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 75, 'parentId': '', 'keyWord': 'specialWxNumber', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '特训营分配微信号', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 76, 'parentId': '', 'keyWord': 'specialIfFriend', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '是否已加特训营老师好友', 'url': '', 'data': '[{"text":"是","value":1},{"text":"否","value":0}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 77, 'parentId': '', 'keyWord': 'specialLessonOneTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 1出席次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 78, 'parentId': '', 'keyWord': 'specialFinishOneTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 1完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 79, 'parentId': '', 'keyWord': 'specialStudyNum', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '特训营累计完课节数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 80, 'parentId': '', 'keyWord': 'specialStudyNumNoduplicate', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '特训营去重完课节数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 82, 'parentId': '', 'keyWord': 'longPeriods', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '长期班营期', 'url': '/periodsWorkBoard/getMyPeriodsName?type=6', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 83, 'parentId': '', 'keyWord': 'firstLongTime', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '长期班付费时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 84, 'parentId': '', 'keyWord': 'periodsValidate', 'keyType': 'DatePicker', 'listModelName': '', 'listIndicatorName': '长期班有效期', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 85, 'parentId': '', 'keyWord': 'longPayPrice', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '长期班付费金额', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 86, 'parentId': '', 'keyWord': 'longPackageName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '长期班套餐名称', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 87, 'parentId': '', 'keyWord': 'longChannel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '长期班购买渠道', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 88, 'parentId': '', 'keyWord': 'longClassName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '长期班班号', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 91, 'parentId': '', 'keyWord': 'longTeacherName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '长期班带班老师', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 92, 'parentId': '', 'keyWord': 'longWxNumber', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '长期班分配微信号', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 93, 'parentId': '', 'keyWord': 'longIfFriend', 'keyType': 'Select', 'listModelName': '', 'listIndicatorName': '是否已加长期班老师好友', 'url': '', 'data': '[{"text":"是","value":1},{"text":"否","value":0}]', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 94, 'parentId': '', 'keyWord': 'longLearnedCount', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '长期班消耗课时', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 95, 'parentId': '', 'keyWord': 'longRemainCount', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '长期班剩余课时', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 96, 'parentId': '', 'keyWord': 'monthStudyNumNoduplicate', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '上月课消', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 97, 'parentId': '', 'keyWord': 'weekStudyNumNoduplicate', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '上周课消', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 98, 'parentId': '', 'keyWord': 'biggestCourseId', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '上课进度', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 99, 'parentId': '', 'keyWord': 'lessonFourTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 4出席次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 100, 'parentId': '', 'keyWord': 'finishFourTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 4完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 102, 'parentId': '', 'keyWord': 'finishFiveTimes', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': 'Lesson 5完课次数', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 103, 'parentId': '', 'keyWord': 'ccSaleName', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '销售负责人', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 106, 'parentId': '', 'keyWord': 'thisWeekStudyNumNoduplicate', 'keyType': 'InputNumber', 'listModelName': '', 'listIndicatorName': '本周课消', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 107, 'parentId': '', 'keyWord': 'thisLevel', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '当前级别', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 108, 'parentId': '', 'keyWord': 'longFirstPayTime', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '首次付费时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 109, 'parentId': '', 'keyWord': 'longExpireTime', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '到期时间', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}, {'indicatorId': 110, 'parentId': '', 'keyWord': 'longAlreadyMainClass', 'keyType': 'Input', 'listModelName': '', 'listIndicatorName': '已学主修课', 'url': '', 'data': '', 'options': '', 'orderNum': '', 'defaultSelect': '', 'createTime': '', 'updateTime': ''}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialBoard.Crm_SpecialBoard</td>
+        <td>5</td>
+        <td>5</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c36',5)">详情</a></td>
+    </tr>
+
+<tr id='pt36.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialBoard_1_1: 特训营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt36.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialBoard_2_2: 特训营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt36.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialBoard_3_3: 特训营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt36.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialBoard_4_4: 特训营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+<tr id='pt36.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialBoard_5_5: 特训营面板：营期面板数据</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialFinishInfo.Crm_SpecialFinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c37',1)">详情</a></td>
+    </tr>
+
+<tr id='pt37.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialFinishInfo: 特训营面板：本月完课数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialMonthAssignCount.Crm_SpecialMonthAssignCount</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c38',1)">详情</a></td>
+    </tr>
+
+<tr id='pt38.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialMonthAssignCount: 特训营面板：本月分配leads数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialMonthMargin.Crm_SpecialMonthMargin</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c39',1)">详情</a></td>
+    </tr>
+
+<tr id='pt39.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialMonthMargin: 特训营面板：本月月绩差额</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialOrdersAmount.Crm_SpecialOrdersAmount</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c40',1)">详情</a></td>
+    </tr>
+
+<tr id='pt40.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialOrdersAmount: 特训营面板：本月成单总金额</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialOutUsers.Crm_SpecialOutUsers</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c41',1)">详情</a></td>
+    </tr>
+
+<tr id='pt41.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialOutUsers: 特训营面板：营期外学员</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_SpecialSumData.Crm_SpecialSumData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c42',1)">详情</a></td>
+    </tr>
+
+<tr id='pt42.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_SpecialSumData: 特训营面板：全部营期数据汇总</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_Supervisor.Crm_Supervisor</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c43',1)">详情</a></td>
+    </tr>
+
+<tr id='pt43.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_Supervisor: 我的全部用户：新建客户：负责人列表</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt43.1')" >
+        通过</a>
+
+    <div id='div_pt43.1' class="popup_window">
+        <pre>pt43.1: [{'userId': 48, 'parentId': '', 'email': '', 'username': '高翔', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 236}, {'userId': 49, 'parentId': '', 'email': '', 'username': '苏三', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1390}, {'userId': 50, 'parentId': '', 'email': '', 'username': '苏大强', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 237}, {'userId': 51, 'parentId': '', 'email': '', 'username': '苏大玉强', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1392}, {'userId': 100, 'parentId': '', 'email': '', 'username': 'banzhuren1', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 324}, {'userId': 146, 'parentId': '', 'email': '', 'username': '祝娟new', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 305}, {'userId': 15, 'parentId': 11, 'email': 'zhangjunfeng@putao-inc.com', 'username': '张俊峰1', 'phoneNum': '18610133303', 'password': 'bbabc65505dfb0e71cd400390fd0def5', 'roleId': '', 'status': 1, 'firstDeptId': 24, 'secondDeptId': 26, 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': 1589941387000, 'updateTime': 1600397569000, 'level': 1, 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': 1, 'tid': 22}, {'userId': 81, 'parentId': '', 'email': '', 'username': '刘苗苗', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 324}, {'userId': 82, 'parentId': '', 'email': '', 'username': '刘美霞1', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 326}, {'userId': 84, 'parentId': '', 'email': '', 'username': '体验营回归测试', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 318}, {'userId': 85, 'parentId': '', 'email': '', 'username': '特训营回归测试', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 341}, {'userId': 87, 'parentId': '', 'email': '', 'username': '随机测试', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 382}, {'userId': 137, 'parentId': '', 'email': '', 'username': '天一', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1433}, {'userId': 53, 'parentId': '', 'email': '', 'username': '大娃', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1393}, {'userId': 143, 'parentId': '', 'email': '', 'username': '王燕', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 322}, {'userId': 88, 'parentId': '', 'email': '', 'username': '海峰', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 381}, {'userId': 89, 'parentId': '', 'email': '', 'username': '独自等待', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 380}, {'userId': 101, 'parentId': '', 'email': '', 'username': 'banzhuren2', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 38}, {'userId': 139, 'parentId': '', 'email': '', 'username': '地三', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1435}, {'userId': 140, 'parentId': '', 'email': '', 'username': '卧底地4', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 1436}, {'userId': 147, 'parentId': '', 'email': '', 'username': '韩格格', 'phoneNum': '', 'password': '', 'roleId': '', 'status': '', 'firstDeptId': '', 'secondDeptId': '', 'thirdDeptId': '', 'lastLoginTime': '', 'createBy': '', 'updateBy': '', 'createTime': '', 'updateTime': '', 'level': '', 'roleName': '', 'deptName': '', 'dataPerms': '', 'selectRoleId': '', 'tid': 65}]
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkAssginInfo.Crm_TmkAssginInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c44',1)">详情</a></td>
+    </tr>
+
+<tr id='pt44.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_tmkassgininfo: TMK面板：本月分配</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkConnectTimeInfo.Crm_TmkConnectTimeInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c45',1)">详情</a></td>
+    </tr>
+
+<tr id='pt45.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_tmkconnecttimeinfo: TMK面板：本月通时</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkFinishInfo.Crm_TmkFinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c46',1)">详情</a></td>
+    </tr>
+
+<tr id='pt46.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkFinishInfo: TMK面板：本月完课</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkLeadsInfo.Crm_TmkLeadsInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c47',1)">详情</a></td>
+    </tr>
+
+<tr id='pt47.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkLeadsInfo: TMK面板：今日待办leads24小时内</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkQuotaStatisticsData.Crm_TmkQuotaStatisticsData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c48',1)">详情</a></td>
+    </tr>
+
+<tr id='pt48.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkQuotaStatisticsData: TMK面板：指标统计</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkStockData.Crm_TmkStockData</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c49',1)">详情</a></td>
+    </tr>
+
+<tr id='pt49.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkStockData: TMK面板：库存待跟进累计</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkTodayFinishInfo.Crm_TmkTodayFinishInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c50',1)">详情</a></td>
+    </tr>
+
+<tr id='pt50.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkTodayFinishInfo: TMK面板：今日待办完课</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkTodayTraialInfo.Crm_TmkTodayTrialInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c51',1)">详情</a></td>
+    </tr>
+
+<tr id='pt51.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkTodayTrialInfo: TMK面板：今日待办约课</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_TmkTrialInfo.Crm_TmkTrialInfo</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c52',1)">详情</a></td>
+    </tr>
+
+<tr id='pt52.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_TmkTrialInfo: TMK面板：本月约课数</div></td>
+    <td colspan='5' align='center'>通过</td>
+</tr>
+
+    <tr class='passClass'>
+        <td>CRM_UserListDownload.Crm_UserListDownload</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c53',1)">详情</a></td>
+    </tr>
+
+<tr id='pt53.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_userlistdownload: 我的全部用户：导出数据</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt53.1')" >
+        通过</a>
+
+    <div id='div_pt53.1' class="popup_window">
+        <pre>pt53.1: https://dtest.putaoabc.net.cn/download/eletrictDownLoad/查询列表相关-20200921190139.csv
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>72</td>
+            <td>71</td>
+            <td>1</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:71, name:'通过'},
+                        {value:1, name:'失败'},
+                        {value:0, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>

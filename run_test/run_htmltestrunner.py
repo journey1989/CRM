@@ -4,6 +4,7 @@ from BSTestRunner import BSTestRunner
 from config.setting import *
 import unittest,time
 from common.sendemail import *
+from HTMLTestRunner_PY3 import HTMLTestRunner
 
 def Run():
 
@@ -15,7 +16,7 @@ def Run():
     print(report)
 
     with open(report, 'wb') as f:
-        runner = BSTestRunner(stream=f,title="CRM接口自动化",description='CRM接口自动化测试结果如下：')
+        runner = HTMLTestRunner(stream=f,title="",description='CRM接口自动化测试结果如下：')
         runner.run(discover)
 
     SendEmail()
