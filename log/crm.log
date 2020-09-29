@@ -732,3 +732,5 @@
 2020-09-22 11:07:49,923 - D:\autotest\common\my_request.py[line:49] - DEBUG: 【请求接口地址：https://ctest.putaoabc.net.cn/self_api/tmkWordBoard/getTmkTrialInfo】
 2020-09-22 11:07:49,951 - D:\autotest\common\my_request.py[line:24] - DEBUG: 【请求接口地址:https://ctest.putaoabc.net.cn/self_api/auth/login】
 2020-09-22 11:07:50,017 - D:\autotest\common\my_request.py[line:24] - DEBUG: 【请求接口地址:https://ctest.putaoabc.net.cn/self_api/myUser/myUserList/download】
+2020-09-22 15:55:53,932 - D:\autotest\common\my_request.py[line:24] - DEBUG: 【请求接口地址:https://ctest.putaoabc.net.cn/self_api/auth/login】
+2020-09-22 15:55:54,301 - D:\autotest\common\my_request.py[line:24] - DEBUG: 【请求接口地址:https://ctest.putaoabc.net.cn/self_api/auth/login】

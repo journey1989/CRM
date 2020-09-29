@@ -9,8 +9,9 @@ from ddt import *
 class TestLoing(unittest.TestCase):
 
 
-        @file_data('D:\\autotest\\data\\testdata.yaml')
-        def testLogin(self,data):
+        @file_data(r'D:\autotest\data\testdata.yaml')
+        @unpack
+        def testLogin(self,email):
 
             url = 'self_api/auth/login'
             real_url = urljoin(TESTBASE_URL, url)
@@ -23,10 +24,10 @@ class TestLoing(unittest.TestCase):
                 'Cookie': 'uuid=D58656BD-8333-AC8A-7D54-BC5090F92D60'
 
             }
-        #     data = {
-        #     "email": "zhangjunfeng@putao-inc.com",
-        #     "password": "123456"
-        # }
+            data = {
+            "email": email,
+            "password": '123456'
+            }
             json_data = json.dumps(data)
 
             res = Myrequest.post(url=real_url,data=json_data, is_json=False, header=headers)
@@ -40,8 +41,8 @@ class TestLoing(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    #login()
-     testLogin()
+   c = TestLoing()
+   c.testLogin()
 
 
 

@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8135ef08-aebb-4d92-bc25-4116ac976d73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/sendemail.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/sendemail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/crm.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/crm.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run_test/run_bstestrunner.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_test/run_htmltestrunner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_case/CRM_CCsaleAmountRanking.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/CRM_CCsaleAmountRanking.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_case/hello.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_case/hello.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,24 +14,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_case/CRM_BwentyFour.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" lean-forward="true" selection-end-line="22" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_test/run_htmltestrunner.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="190">
               <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#2#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test_case/hello.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="821">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -54,18 +50,15 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_case/CRM_BupgradeStu.py">
+        <entry file="file://$PROJECT_DIR$/data/testdata.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="17" column="12" lean-forward="true" selection-end-line="23" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="114">
+              <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/sendemail.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-57">
@@ -78,34 +71,46 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_case/CRM_CourseList.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="152">
+              <caret line="20" column="9" lean-forward="true" selection-end-line="30" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_case/CRM_WaitAssignUserList.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="12" column="20" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_case/CRM_LessonList.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test_case/CRM_BmonthNoAttend.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="152">
-              <caret line="14" column="46" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="14" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_case/CRM_BweekAttend.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="21" column="24" lean-forward="true" selection-end-line="23" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_case/CRM_BtransferLeads.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="16" column="23" lean-forward="true" selection-end-line="23" />
+              <caret line="14" column="46" lean-forward="true" selection-end-line="23" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -118,18 +123,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
               <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_case/CRM_BrenewalAmount.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="23" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -153,9 +146,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/test_case/CRM_PhonePlace.py" />
-        <option value="$PROJECT_DIR$/test_case/CRM_UserListDownload.py" />
-        <option value="$PROJECT_DIR$/test_case/CRM_SelectInfo.py" />
         <option value="$PROJECT_DIR$/test_case/CRM_Supervisor.py" />
         <option value="$PROJECT_DIR$/test_case/CRM_MyUserList.py" />
         <option value="$PROJECT_DIR$/test_case/CRM_Menu.py" />
@@ -192,7 +182,6 @@
         <option value="$PROJECT_DIR$/data/testdata.py" />
         <option value="$PROJECT_DIR$/data/testdata.html" />
         <option value="$PROJECT_DIR$/data/testdata.yaml" />
-        <option value="$PROJECT_DIR$/test_case/hello.py" />
         <option value="$PROJECT_DIR$/run_test/run_bstestrunner.py" />
         <option value="$PROJECT_DIR$/test_case/CRM_BwentyFour.py" />
         <option value="$PROJECT_DIR$/test_case/CRM_BupgradeStu.py" />
@@ -204,12 +193,16 @@
         <option value="$PROJECT_DIR$/test_case/CRM_CCsaleAmountRanking.py" />
         <option value="$PROJECT_DIR$/common/sendemail.py" />
         <option value="$PROJECT_DIR$/run_test/run_htmltestrunner.py" />
+        <option value="$PROJECT_DIR$/test_case/CRM_CourseList.py" />
+        <option value="$PROJECT_DIR$/test_case/CRM_WaitAssignUserList.py" />
+        <option value="$PROJECT_DIR$/test_case/CRM_LessonList.py" />
+        <option value="$PROJECT_DIR$/test_case/hello.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-185" />
-    <option name="y" value="76" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-25" />
+    <option name="y" value="2" />
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
@@ -246,7 +239,7 @@
             <path>
               <item name="autotest" type="b2602c69:ProjectViewProjectNode" />
               <item name="autotest" type="462c0819:PsiDirectoryNode" />
-              <item name="run_test" type="462c0819:PsiDirectoryNode" />
+              <item name="test_case" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,7 +264,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.run_htmltestrunner">
+  <component name="RunManager" selected="Python tests.Unittests in hello.py">
     <configuration name="run_htmltestrunner" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="autotest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -293,6 +286,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for hello.TestLoing.testLogin" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="autotest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;hello.TestLoing.testLogin&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests in CRM_Bperformance.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="autotest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -304,34 +311,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;$PROJECT_DIR$/test_case/CRM_Bperformance.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests in CRM_BrenewalAmount.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="autotest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_case/CRM_BrenewalAmount.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests in CRM_BtransferLeads.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="autotest" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_case/CRM_BtransferLeads.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -349,13 +328,27 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests in hello.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="autotest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test_case" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test_case/hello.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests in hello.py" />
+        <item itemvalue="Python tests.Unittests for hello.TestLoing.testLogin" />
         <item itemvalue="Python.run_htmltestrunner" />
         <item itemvalue="Python tests.Unittests in CRM_CCsaleAmountRanking.py" />
         <item itemvalue="Python tests.Unittests in CRM_Bperformance.py" />
-        <item itemvalue="Python tests.Unittests in CRM_BrenewalAmount.py" />
-        <item itemvalue="Python tests.Unittests in CRM_BtransferLeads.py" />
       </list>
     </recent_temporary>
   </component>
@@ -373,15 +366,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_CRM_UserListDownload_Crm_UserListDownload_test_userlistdownload - 2020.09.21 at 14h 39m 46s.xml">
-      <configuration name="Unittests for CRM_UserListDownload.Crm_UserListDownload.test_userlistdownload" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_hello_TestLoing_testLogin - 2020.09.21 at 16h 58m 39s.xml">
-      <configuration name="Unittests for hello.TestLoing.testLogin" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_CRM_BwentyFour_py - 2020.09.22 at 10h 45m 40s.xml">
-      <configuration name="Unittests in CRM_BwentyFour.py" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_in_CRM_BupgradeStu_py - 2020.09.22 at 10h 47m 28s.xml">
       <configuration name="Unittests in CRM_BupgradeStu.py" configurationId="tests" />
     </history-entry>
@@ -403,17 +387,26 @@
     <history-entry file="Unittests_in_CRM_CCsaleAmountRanking_py - 2020.09.22 at 11h 07m 13s.xml">
       <configuration name="Unittests in CRM_CCsaleAmountRanking.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Unittests_in_hello_py - 2020.09.22 at 15h 50m 05s.xml">
+      <configuration name="Unittests in hello.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_hello_TestLoing_testLogin - 2020.09.22 at 15h 54m 58s.xml">
+      <configuration name="Unittests for hello.TestLoing.testLogin" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_hello_py - 2020.09.22 at 15h 55m 54s.xml">
+      <configuration name="Unittests in hello.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.296875" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.296875" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3852459" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3852459" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -428,46 +421,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test_case/CRM_SelectInfo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_case/CRM_PhonePlace.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_case/CRM_Supervisor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_case/CRM_Add.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" selection-end-line="2" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_case/CRM_MyUserList.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -777,27 +730,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_case/hello.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="35" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_case/hi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/testdata.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -871,16 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_case/CRM_BmonthNoAttend.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="14" column="46" lean-forward="true" selection-start-line="13" selection-start-column="19" selection-end-line="14" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_case/CRM_CCsaleAmountRanking.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
@@ -901,12 +827,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/result/20200922 11_07_31CRM接口自动化测试报告.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4408">
+          <caret line="232" column="16" lean-forward="true" selection-start-line="232" selection-start-column="16" selection-end-line="232" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/common/sendemail.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-57">
           <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_case/CRM_BmonthNoAttend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="14" column="46" lean-forward="true" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_case/CRM_WaitAssignUserList.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="20" selection-end-line="25" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_case/CRM_CourseList.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="20" column="9" lean-forward="true" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_case/CRM_LessonList.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/testdata.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_case/hello.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="821">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
